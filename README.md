@@ -5,7 +5,7 @@ Python requests module modification that allows for storing and pulling data fro
 Module is a work in progress, current usage demo:
 
 ```python
-import localRequest as lr
+import localRequests as lr
 
 lr.get(url,params=paramsAsDict)
 ```
