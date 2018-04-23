@@ -1,20 +1,13 @@
 #!/usr/bin/env python
 
 import requests
-# import json
 import pickle
-# from collections import OrderedDict
 
-def get(url,params=[]):
+def get(url,params=None):
 	dirpath = 'data/'
-	if params:
-		payload = makeParamPayload(params)
-	else:
-		payload = None
-
 	filePath = dirpath + url.replace('/','__') + '.pkl'
-	# filePath = '/'.join(arg.strip('/') for arg in [dirpath,url]) + '.json'
-
+	if params is not None:
+		payload = makeParamPayload(params)
 	try:
 		fn = open(filePath,'r') 
 		data = pickle.load(fn)
@@ -39,12 +32,6 @@ def postRequests(url,params):
 	data = requests.get(url, params = params)
 	return {'content':data.content,'url':data.url,'headers':data.headers,'status_code':data.status_code,'reason':data.reason}
 	
-# def readData(params):
-# 	if params is None:
-# 		return data
-# 	else:
-# 		return data[makeParamPayload(params)]
-
 def makeParamPayload(params):
 	paramKey=[]
 	for key, value in sorted(params.items()):
