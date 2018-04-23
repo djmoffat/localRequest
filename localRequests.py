@@ -1,49 +1,55 @@
 #!/usr/bin/env python
 
 import requests
-import json
-from collections import OrderedDict
+# import json
+import pickle
+# from collections import OrderedDict
 
-class getRequest():
-	dirPath = None
+def get(url,params=[]):
+	dirpath = 'data/'
+	if params:
+		payload = makeParamPayload(params)
+	else:
+		payload = None
 
+	filePath = dirpath + url.replace('/','__') + '.pkl'
+	# filePath = '/'.join(arg.strip('/') for arg in [dirpath,url]) + '.json'
 
-	def __init__(self,dirPath='data/',forceUpdate=False,forceLocal=False,timeout=0,url=None):
-		self.dirPath = dirPath
-		self.forceUpdate = forceUpdate
-		self.forceLocal = forceLocal
-		self.timeout = timeout
-		self.url = url
-		self.f = None
+	try:
+		fn = open(filePath,'r') 
+		data = pickle.load(fn)
+		fn.close()
+		if payload not in data:
+			data[payload] = postRequests(url,params)
+			fn = open(filePath,'a') 
+			pickle.dump(data,fn)
+			fn.close()
+		return data[payload]
+	except IOError: 
+		print 'Error: File does not appear to exist.'
+		data = dict()
+		data[payload] = postRequests(url,params)
+		fn = open(filePath,'w+') 
+		pickle.dump(data,fn)
+		fn.close()
+	return data[payload]
 
-		if url is not None:
-			self.filePath = '/'.join(arg.strip('/') for arg in [dirpath,url]) + '.json'
-			try:
-				self.f = open(filePath,'r') 
-				self.data = json.load(self.f)
-			except IOError: 
-				print 'Error: File does not appear to exist.'
+def postRequests(url,params):
+	print 'posting request'
+	data = requests.get(url, params = params)
+	return {'content':data.content,'url':data.url,'headers':data.headers,'status_code':data.status_code,'reason':data.reason}
+	
+# def readData(params):
+# 	if params is None:
+# 		return data
+# 	else:
+# 		return data[makeParamPayload(params)]
 
-	def get(self,url=None,params=[]):
-		if self.url is not None:
-			if url is not None and url != self.url:
-				print 'Error - URL already defined'
-			return readData(params)
-		else #self.url is None
-
-			print 'Not implemented yet'
-
-	def readData(params):
-		if params is None:
-				return self.data
-			else:
-				return self.data[makeParamPayload(params)]
-
-	def makeParamPayload(params):
-		paramKey=[]
-		for key, value in sorted(params.items()):
-			paramKey.append(str(key) + '=' + str(value))
-		return '&'.join(paramKey)
+def makeParamPayload(params):
+	paramKey=[]
+	for key, value in sorted(params.items()):
+		paramKey.append(str(key) + '=' + str(value))
+	return '&'.join(paramKey)
 
 
 
