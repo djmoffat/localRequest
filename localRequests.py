@@ -15,15 +15,16 @@ def get(url,params=None,timeout=0,source=None,verbose=False):
 	* timeout, in seconds, will take a timestamp record at the previous post requests, and if necessary, perform a wait function 
 	to ensure the specificed time has elapsed.
 	* source options: None, local, remote
-	 ** None (default): will look up local files unless it does not exist, where a post request will be made and saved
-	 ** local: will force only use of local files, and return None type for a parameter option not used before
-	 ** remote: will force a pull and update of all local files, overwriting each one
-	 ** verbose: print out of posting requests and waiting time, every time it is required
+	 	* None (default): will look up local files unless it does not exist, where a post request will be made and saved
+	 	* local: will force only use of local files, and return None type for a parameter option not used before
+	 	* remote: will force a pull and update of all local files, overwriting each one
+	  	* verbose: print out of posting requests and waiting time, every time it is required
 	'''
 	dirpath = '/Volumes/Internal/Documents/localRequest/data/'
 	filePath = dirpath + url.replace('/','__') + '.pkl'
 	global timestamp
-	global debug = verbose
+	global debug
+	debug = verbose
 	if params is not None:
 		payload = makeParamPayload(params)
 	else:
