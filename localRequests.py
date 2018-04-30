@@ -20,6 +20,7 @@ def get(url,params=None,timeout=0,source=None):
 	'''
 	dirpath = '/Volumes/Internal/Documents/localRequest/data/'
 	filePath = dirpath + url.replace('/','__') + '.pkl'
+	global timestamp
 	if params is not None:
 		payload = makeParamPayload(params)
 	else:
@@ -27,7 +28,7 @@ def get(url,params=None,timeout=0,source=None):
 	try:
 		fn = open(filePath,'r') 
 		data = pickle.load(fn)
-		if 'timestamp' in data:
+		if 'timestamp' in data.keys():
 			timestamp = data['timestamp']
 		else:
 			data['timestamp'] = timestamp
@@ -59,7 +60,7 @@ def get(url,params=None,timeout=0,source=None):
 	return data[payload]
 
 def postRequests(url,params,timeout):
-	# print 'posting request'
+	print 'posting request'
 	waitTime = time.time() - timestamp
 	if waitTime <= timeout:
 		time.sleep(timeout-waitTime)
