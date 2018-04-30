@@ -18,6 +18,7 @@ def get(url,params=None,timeout=0,source=None,verbose=False):
 	 ** None (default): will look up local files unless it does not exist, where a post request will be made and saved
 	 ** local: will force only use of local files, and return None type for a parameter option not used before
 	 ** remote: will force a pull and update of all local files, overwriting each one
+	 ** verbose: print out of posting requests and waiting time, every time it is required
 	'''
 	dirpath = '/Volumes/Internal/Documents/localRequest/data/'
 	filePath = dirpath + url.replace('/','__') + '.pkl'
