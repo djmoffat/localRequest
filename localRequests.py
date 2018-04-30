@@ -3,8 +3,9 @@
 import requests
 import pickle
 
+
 def get(url,params=None):
-	dirpath = 'data/'
+	dirpath = '/Volumes/Internal/Documents/localRequest/data/'
 	filePath = dirpath + url.replace('/','__') + '.pkl'
 	if params is not None:
 		payload = makeParamPayload(params)
