@@ -6,8 +6,9 @@ import time
 import pdb
 
 timestamp = time.time()
+debug = False
 
-def get(url,params=None,timeout=0,source=None):
+def get(url,params=None,timeout=0,source=None,verbose=False):
 	'''
 	* url is the classic post url
 	* params are the standard parameters to post to a url, and used as the key in the storage dict.
@@ -21,6 +22,7 @@ def get(url,params=None,timeout=0,source=None):
 	dirpath = '/Volumes/Internal/Documents/localRequest/data/'
 	filePath = dirpath + url.replace('/','__') + '.pkl'
 	global timestamp
+	global debug = verbose
 	if params is not None:
 		payload = makeParamPayload(params)
 	else:
@@ -46,7 +48,8 @@ def get(url,params=None,timeout=0,source=None):
 				fn.close()
 		return data[payload]
 	except IOError: 
-		print 'File does not appear to exist - Creating File'
+		if debug:
+			print 'File does not appear to exist - Creating File'
 		if source == 'local':
 			print 'Cannot create new file and populate where source = local'
 		else:
@@ -60,9 +63,12 @@ def get(url,params=None,timeout=0,source=None):
 	return data[payload]
 
 def postRequests(url,params,timeout):
-	print 'posting request'
+	if debug:
+		print 'posting request'
 	waitTime = time.time() - timestamp
 	if waitTime <= timeout:
+		if debug:
+			print 'waiting for ' + str(timeout-waitTime) + 's'
 		time.sleep(timeout-waitTime)
 	data = requests.get(url, params = params)
 	return {'content':data.content,'url':data.url,'headers':data.headers,'status_code':data.status_code,'reason':data.reason}
