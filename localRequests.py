@@ -17,7 +17,10 @@ def get(url,params=None,timeout=0):
 	try:
 		fn = open(filePath,'r') 
 		data = pickle.load(fn)
-		timestamp = data['timestamp']
+		if 'timestamp' in data:
+			timestamp = data['timestamp']
+		else:
+			data['timestamp'] = timestamp
 		fn.close()
 		if payload not in data:
 			data[payload] = postRequests(url,params,timeout)
