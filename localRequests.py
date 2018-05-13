@@ -53,6 +53,7 @@ def get(url,params=None,timeout=0,source=None,verbose=False, debug=False):
 			print 'File does not appear to exist - Creating File'
 		if source == 'local':
 			print 'Cannot create new file and populate where source = local'
+			return None
 		else:
 			data = dict()
 			data[payload] = postRequests(url,params,timeout)
