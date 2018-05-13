@@ -6,9 +6,9 @@ import time
 import pdb
 
 timestamp = time.time()
+debug = False
 
-
-def get(url,params=None,timeout=0,source=None,verbose=False, debug=False):
+def get(url,params=None,timeout=0,source=None,verbose=False):
 	'''
 	* url is the classic post url
 	* params are the standard parameters to post to a url, and used as the key in the storage dict.
@@ -23,6 +23,7 @@ def get(url,params=None,timeout=0,source=None,verbose=False, debug=False):
 	dirpath = 'data/'
 	filePath = dirpath + url.replace('/','__') + '.pkl'
 	global timestamp
+	global debug
 	debug = verbose
 	if params is not None:
 		payload = makeParamPayload(params)
