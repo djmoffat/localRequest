@@ -6,9 +6,9 @@ import time
 import pdb
 
 timestamp = time.time()
-debug = False
 
-def get(url,params=None,timeout=0,source=None,verbose=False):
+
+def get(url,params=None,timeout=0,source=None,verbose=False, debug=False):
 	'''
 	* url is the classic post url
 	* params are the standard parameters to post to a url, and used as the key in the storage dict.
@@ -20,10 +20,9 @@ def get(url,params=None,timeout=0,source=None,verbose=False):
 	 	* remote: will force a pull and update of all local files, overwriting each one
 	  	* verbose: print out of posting requests and waiting time, every time it is required
 	'''
-	dirpath = '/Volumes/Internal/Documents/localRequest/data/'
+	dirpath = 'data/'
 	filePath = dirpath + url.replace('/','__') + '.pkl'
 	global timestamp
-	global debug
 	debug = verbose
 	if params is not None:
 		payload = makeParamPayload(params)
