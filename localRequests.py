@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 import requests
 import pickle
 import time
