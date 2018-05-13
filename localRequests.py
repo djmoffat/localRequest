@@ -20,7 +20,8 @@ def get(url,params=None,timeout=0,source=None,verbose=False):
 	 	* remote: will force a pull and update of all local files, overwriting each one
 	  	* verbose: print out of posting requests and waiting time, every time it is required
 	'''
-	dirpath = 'data/'
+	dirpath = os.path.realpath(__file__)
+	# dirpath = '/Volumes/Internal/Documents/localRequest/data/'
 	filePath = dirpath + url.replace('/','__') + '.pkl'
 	global timestamp
 	global debug
