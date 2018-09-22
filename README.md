@@ -20,6 +20,7 @@ to ensure the specificed time has elapsed.
     * `local`: will force only use of local files, and return None type for a parameter option not used before
     * `remote`: will force a pull and update of all local files, overwriting each one
 * `verbose` print out of posting requests and waiting time, every time it is required
+* `path` the directory path that all pickle files will be stored and read from
 
 
 Please get in touch for any questions
