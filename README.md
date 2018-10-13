@@ -22,5 +22,14 @@ to ensure the specificed time has elapsed.
 * `verbose` print out of posting requests and waiting time, every time it is required
 * `path` the directory path that all pickle files will be stored and read from
 
+## Dependancies
+Requires the following python modules 
+``` python
+requests 
+pickle
+os
+time
+```
 
+## Contact
 Please get in touch for any questions
